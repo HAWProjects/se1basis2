@@ -25,6 +25,8 @@ public class Account {
 	
 	private AccountNrType accountNr;
 	
+
+	
 	/**
 	 * leerer Constructor für hypernate
 	 * Constructor
@@ -37,6 +39,7 @@ public class Account {
 	 */
 	public Account(AccountNrType accountNr){
 		this.accountNr = accountNr;
+		accountValue = 0;
 	}
 	
 	
@@ -46,6 +49,14 @@ public class Account {
 	 */
 	public AccountNrType getAccountNr(){
 		return accountNr;
+	}
+	
+	/**
+	 * TODO
+	 * @return
+	 */
+	public int getAccountValue(){
+		return accountValue;
 	}
 	
 	/**

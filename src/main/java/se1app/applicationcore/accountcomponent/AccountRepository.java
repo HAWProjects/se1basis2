@@ -4,7 +4,6 @@
 package se1app.applicationcore.accountcomponent;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,7 +20,7 @@ import se1app.applicationcore.util.AccountNrType;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Integer>{
 
-	Optional<Account> findByAccountNr(AccountNrType accountnr);
+	Account findByAccountNr(AccountNrType accountnr);
 	
 	
 	//TODO: die Query muss noch getestet werden. Ich zweifel noch an der Korrektheit..

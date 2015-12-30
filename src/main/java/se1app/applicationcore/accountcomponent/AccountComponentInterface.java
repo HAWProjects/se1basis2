@@ -27,12 +27,20 @@ public interface AccountComponentInterface {
 	 */
 	Account getAccount(AccountNrType account);
 	
+	
+	/**
+	 * loescht einen Account
+	 * @param accountNr die AccountNummer des zu loeschenden Accounts
+	 */
+	void deleteAccount(AccountNrType accountNr);
+	
 	/**
 	 * ueberweist einen Betrag von einem Konto auf ein anderes
 	 * @param sourceAccount das Konto von dem abgebucht wird
 	 * @param targetAccount das Konto auf das ueberwiesen wird
 	 * @param value der Betrag (darf nicht negativ sein)
+	 * @throws AccountNotCoveredException 
 	 */
-	void transfer(AccountNrType sourceAccount,AccountNrType targetAccount, int value);
+	void transfer(AccountNrType sourceAccount,AccountNrType targetAccount, int value) throws AccountNotCoveredException;
 
 }
