@@ -21,4 +21,9 @@ public class ApplicationRoutes {
     public String hello(String name, Model model) {
         return "manageCustomers";
     }
+    
+    @RequestMapping("/transactions")
+    public String transaction(String name, Model model){
+    	return "transactions";
+    }
 }

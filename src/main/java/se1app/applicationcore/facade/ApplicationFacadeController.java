@@ -4,12 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import se1app.applicationcore.accountcomponent.AccountComponentInterface;
+import se1app.applicationcore.accountcomponent.AccountNotCoveredException;
+import se1app.applicationcore.branchcomponent.Branch;
+import se1app.applicationcore.branchcomponent.BranchComponentInterface;
 import se1app.applicationcore.customercomponent.Customer;
 import se1app.applicationcore.customercomponent.CustomerComponentInterface;
 import se1app.applicationcore.customercomponent.CustomerNotFoundException;
 import se1app.applicationcore.customercomponent.Reservation;
 import se1app.applicationcore.moviecomponent.MovieComponentInterface;
 import se1app.applicationcore.moviecomponent.MovieNotFoundException;
+import se1app.applicationcore.util.AccountNrType;
 
 import java.util.List;
 
@@ -21,6 +27,12 @@ class ApplicationFacadeController {
 
     @Autowired
     private MovieComponentInterface movieComponentInterface;
+    
+    @Autowired
+    private AccountComponentInterface accountComponent;
+    
+    @Autowired
+    private BranchComponentInterface branchComponent;
 
     @RequestMapping("/customers")
     public List<Customer> getAllCustomers()
@@ -74,5 +86,12 @@ class ApplicationFacadeController {
         {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+    
+    //________________ Praktikum 4 ___________________
+    
+    @RequestMapping(value = "/transactions", method = RequestMethod.POST)
+    public void doTransaction(@RequestBody int value) throws AccountNotCoveredException {
+    	accountComponent.transfer(new AccountNrType(12484), new AccountNrType(12485), value);;
     }
 }

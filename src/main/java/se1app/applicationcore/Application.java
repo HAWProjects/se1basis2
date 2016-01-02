@@ -4,10 +4,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
+import se1app.applicationcore.accountcomponent.Account;
+import se1app.applicationcore.accountcomponent.AccountRepository;
 import se1app.applicationcore.customercomponent.Customer;
 import se1app.applicationcore.customercomponent.CustomerRepository;
 import se1app.applicationcore.customercomponent.Reservation;
 import se1app.applicationcore.moviecomponent.Movie;
+import se1app.applicationcore.util.AccountNrType;
 
 import java.util.Arrays;
 
@@ -15,12 +19,19 @@ import java.util.Arrays;
 public class Application {
 
     @Bean
-    CommandLineRunner init(CustomerRepository customerRepository) {
+    CommandLineRunner init(CustomerRepository customerRepository , AccountRepository accountRepository) {
         return args -> {
             Customer mickey = new Customer("Mueller");
             Customer minnie = new Customer("Meier");
             Customer pluto = new Customer("Schulze");
             customerRepository.save(Arrays.asList(mickey, minnie, pluto));
+            
+            Account accOne = new Account(new AccountNrType(12484));
+            Account accTwo = new Account(new AccountNrType(12485));
+            Account accThree = new Account(new AccountNrType(12486));
+            accOne.addToAcountValue(100);
+            accTwo.addToAcountValue(200);
+            accountRepository.save(Arrays.asList(accOne,accTwo,accThree));
         };
     }
 
