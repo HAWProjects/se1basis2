@@ -30,4 +30,15 @@ public class BranchComponent implements BranchComponentInterface{
 		branchRepository.save(branch);
 	}
 
+	@Override
+	public int getTransactionCountOfBranch(int branchNr) throws BranchNotFoundException {
+		Branch branch = branchRepository.findBybranchNr(branchNr);
+		if(branch == null){
+			throw new BranchNotFoundException(branchNr);
+		}
+		return branch.getNumberOfTransfers();
+	}
+	
+	
+
 }

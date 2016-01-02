@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 
 import se1app.applicationcore.accountcomponent.Account;
 import se1app.applicationcore.accountcomponent.AccountRepository;
+import se1app.applicationcore.branchcomponent.Branch;
+import se1app.applicationcore.branchcomponent.BranchRepository;
 import se1app.applicationcore.customercomponent.Customer;
 import se1app.applicationcore.customercomponent.CustomerRepository;
 import se1app.applicationcore.customercomponent.Reservation;
@@ -19,7 +21,7 @@ import java.util.Arrays;
 public class Application {
 
     @Bean
-    CommandLineRunner init(CustomerRepository customerRepository , AccountRepository accountRepository) {
+    CommandLineRunner init(CustomerRepository customerRepository , AccountRepository accountRepository, BranchRepository branchRepository) {
         return args -> {
             Customer mickey = new Customer("Mueller");
             Customer minnie = new Customer("Meier");
@@ -32,6 +34,11 @@ public class Application {
             accOne.addToAcountValue(100);
             accTwo.addToAcountValue(200);
             accountRepository.save(Arrays.asList(accOne,accTwo,accThree));
+            
+            Branch branchOne = new Branch(1);
+            Branch branchTwo = new Branch(2);
+            
+            branchRepository.save(Arrays.asList(branchOne,branchTwo));
         };
     }
 

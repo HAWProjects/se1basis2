@@ -9,6 +9,7 @@ import se1app.applicationcore.accountcomponent.AccountComponentInterface;
 import se1app.applicationcore.accountcomponent.AccountNotCoveredException;
 import se1app.applicationcore.branchcomponent.Branch;
 import se1app.applicationcore.branchcomponent.BranchComponentInterface;
+import se1app.applicationcore.branchcomponent.BranchNotFoundException;
 import se1app.applicationcore.customercomponent.Customer;
 import se1app.applicationcore.customercomponent.CustomerComponentInterface;
 import se1app.applicationcore.customercomponent.CustomerNotFoundException;
@@ -91,7 +92,14 @@ class ApplicationFacadeController {
     //________________ Praktikum 4 ___________________
     
     @RequestMapping(value = "/transactions", method = RequestMethod.POST)
-    public void doTransaction(@RequestBody int value) throws AccountNotCoveredException {
+    public void doTransaction(@PathVariable("value") int value) throws AccountNotCoveredException {
     	accountComponent.transfer(new AccountNrType(12484), new AccountNrType(12485), value);;
+    }
+    
+    @RequestMapping(value = "/transactions/{branchNr}", method = RequestMethod.GET)
+    public ResponseEntity<?> getTransactionCount(@PathVariable("branchNr") String branchNr) throws BranchNotFoundException{
+    	int bNr = Integer.parseInt(branchNr);
+    	int count = branchComponent.getTransactionCountOfBranch(bNr);
+    	return new ResponseEntity<>(count, HttpStatus.OK);
     }
 }

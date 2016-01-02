@@ -33,7 +33,7 @@
     <div>
         <form ng-submit="doTransaction()">
         <br/>
-        <p>Value : <input type="text" name="name" ng-model="name"/></p>
+        <p>Value : <input type="text" name="value" ng-model="value"/></p>
         <br/>
        <!-- <h1>Enter a customer name to add it to the list (submit with '&lt;Enter&gt;'): {{name}}</h1> --> 
         <h1>Count Transactions</h1>
@@ -43,7 +43,7 @@
     <table class="table table-striped">
         <tr><th>#</th><th>Transactions</th></tr>
         <tr ng-repeat="transaction in transactions">
-            <td>{{ transaction. }}</td>
+            <td>{{ transaction.count }}</td>
            
         </tr>
     </table>
