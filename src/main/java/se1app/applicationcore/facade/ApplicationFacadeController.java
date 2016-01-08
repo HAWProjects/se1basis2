@@ -1,5 +1,6 @@
 package se1app.applicationcore.facade;
 
+import org.hibernate.annotations.Formula;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -92,9 +93,25 @@ class ApplicationFacadeController {
     //________________ Praktikum 4 ___________________
     
     @RequestMapping(value = "/transactions", method = RequestMethod.POST)
-    public void doTransaction(@PathVariable("value") int value) throws AccountNotCoveredException {
-    	accountComponent.transfer(new AccountNrType(12484), new AccountNrType(12485), value);;
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<?> doTransaction(@PathVariable("value") int value) throws AccountNotCoveredException, BranchNotFoundException {
+    	accountComponent.transfer(new AccountNrType(12484), new AccountNrType(12485), value);
+    	int bNr = 1; // die branchnr normalerweise aus der AccounttypNr ableiten
+    	int count = branchComponent.getTransactionCountOfBranch(bNr);
+    	return new ResponseEntity<>(count, HttpStatus.OK);
     }
+    
+    
+//    @RequestMapping(value = "/transactions", method = RequestMethod.POST)
+//    @ResponseStatus(HttpStatus.OK)
+//    public ResponseEntity<?> doTransactionF(@RequestBody("value") int value) throws AccountNotCoveredException, BranchNotFoundException {
+//    	accountComponent.transfer(new AccountNrType(12484), new AccountNrType(12485), value);
+//    	int bNr = 1; // die branchnr normalerweise aus der AccounttypNr ableiten
+//    	int count = branchComponent.getTransactionCountOfBranch(bNr);
+//    	return new ResponseEntity<>(count, HttpStatus.OK);
+//    }
+ 
+    
     
     @RequestMapping(value = "/transactions/{branchNr}", method = RequestMethod.GET)
     public ResponseEntity<?> getTransactionCount(@PathVariable("branchNr") String branchNr) throws BranchNotFoundException{

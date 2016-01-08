@@ -6,8 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import se1app.applicationcore.accountcomponent.Account;
+import se1app.applicationcore.accountcomponent.AccountComponent;
 import se1app.applicationcore.accountcomponent.AccountRepository;
 import se1app.applicationcore.branchcomponent.Branch;
+import se1app.applicationcore.branchcomponent.BranchComponent;
 import se1app.applicationcore.branchcomponent.BranchRepository;
 import se1app.applicationcore.customercomponent.Customer;
 import se1app.applicationcore.customercomponent.CustomerRepository;
@@ -31,14 +33,20 @@ public class Application {
             Account accOne = new Account(new AccountNrType(12484));
             Account accTwo = new Account(new AccountNrType(12485));
             Account accThree = new Account(new AccountNrType(12486));
-            accOne.addToAcountValue(100);
-            accTwo.addToAcountValue(200);
+            accOne.addToAcountValue(120);
+            accTwo.addToAcountValue(180);
+            
             accountRepository.save(Arrays.asList(accOne,accTwo,accThree));
             
             Branch branchOne = new Branch(1);
             Branch branchTwo = new Branch(2);
             
+            
             branchRepository.save(Arrays.asList(branchOne,branchTwo));
+            
+            AccountComponent accCom = new AccountComponent(accountRepository, new BranchComponent(branchRepository));
+            accCom.transfer(accOne.getAccountNr(), accTwo.getAccountNr(), 10);
+            accCom.transfer(accOne.getAccountNr(), accTwo.getAccountNr(), 10);
         };
     }
 
