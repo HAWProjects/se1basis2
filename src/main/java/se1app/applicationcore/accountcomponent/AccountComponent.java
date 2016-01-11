@@ -3,6 +3,7 @@
  */
 package se1app.applicationcore.accountcomponent;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +59,8 @@ public class AccountComponent implements AccountComponentInterface {
 
 		//TODO:transaktion hochzählen
 		try {
-			branchComponent.increaseTransferStatistics(1);
+			int branchNr = 1; // normalerweise aus Account ableiten
+			branchComponent.increaseTransferStatistics(branchNr);
 		} catch(BranchNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -68,6 +70,18 @@ public class AccountComponent implements AccountComponentInterface {
 	@Override
 	public void deleteAccount(AccountNrType accountNr) {
 		accountRepository.delete(accountRepository.findByAccountNr(accountNr));
+	}
+	
+	public BranchComponentInterface getBranchComponent(){
+		return branchComponent;
+	}
+	
+	public List<Transaction> getAllTransactions(){
+		List<Transaction> result = new LinkedList<>();
+		for(Account allAccou :accountRepository.findAll()){
+			result.addAll(allAccou.getTransactions());
+		}
+		return result;
 	}
 
 

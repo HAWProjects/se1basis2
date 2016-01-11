@@ -1,15 +1,20 @@
 package se1app.applicationcore.facade;
 
-import org.hibernate.annotations.Formula;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import se1app.applicationcore.accountcomponent.AccountComponentInterface;
 import se1app.applicationcore.accountcomponent.AccountNotCoveredException;
-import se1app.applicationcore.branchcomponent.Branch;
-import se1app.applicationcore.branchcomponent.BranchComponentInterface;
+import se1app.applicationcore.accountcomponent.Transaction;
 import se1app.applicationcore.branchcomponent.BranchNotFoundException;
 import se1app.applicationcore.customercomponent.Customer;
 import se1app.applicationcore.customercomponent.CustomerComponentInterface;
@@ -18,8 +23,6 @@ import se1app.applicationcore.customercomponent.Reservation;
 import se1app.applicationcore.moviecomponent.MovieComponentInterface;
 import se1app.applicationcore.moviecomponent.MovieNotFoundException;
 import se1app.applicationcore.util.AccountNrType;
-
-import java.util.List;
 
 @RestController
 class ApplicationFacadeController {
@@ -33,8 +36,6 @@ class ApplicationFacadeController {
     @Autowired
     private AccountComponentInterface accountComponent;
     
-    @Autowired
-    private BranchComponentInterface branchComponent;
 
     @RequestMapping("/customers")
     public List<Customer> getAllCustomers()
@@ -92,31 +93,27 @@ class ApplicationFacadeController {
     
     //________________ Praktikum 4 ___________________
     
+    
+   
     @RequestMapping(value = "/transactions", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> doTransaction(@PathVariable("value") int value) throws AccountNotCoveredException, BranchNotFoundException {
-    	accountComponent.transfer(new AccountNrType(12484), new AccountNrType(12485), value);
-    	int bNr = 1; // die branchnr normalerweise aus der AccounttypNr ableiten
-    	int count = branchComponent.getTransactionCountOfBranch(bNr);
-    	return new ResponseEntity<>(count, HttpStatus.OK);
+    @ResponseStatus(HttpStatus.CREATED)
+    public Transaction addTransaction(@RequestBody Integer value) throws AccountNotCoveredException {
+    	AccountNrType accountNr = new AccountNrType(12484);
+    	accountComponent.transfer(accountNr, new AccountNrType(12485), value);
+        return new Transaction(value);
     }
     
+    @RequestMapping(value = "/transactions/{value}", method = RequestMethod.GET)
+    public List<Transaction> getTransaction(@PathVariable("value") int value) throws AccountNotCoveredException, BranchNotFoundException {
+    	AccountNrType accountNr = new AccountNrType(12484);
+    	accountComponent.transfer(accountNr, new AccountNrType(12485), value);
+    	
+    	return accountComponent.getTransactions(accountNr);
+    }
     
-//    @RequestMapping(value = "/transactions", method = RequestMethod.POST)
-//    @ResponseStatus(HttpStatus.OK)
-//    public ResponseEntity<?> doTransactionF(@RequestBody("value") int value) throws AccountNotCoveredException, BranchNotFoundException {
-//    	accountComponent.transfer(new AccountNrType(12484), new AccountNrType(12485), value);
-//    	int bNr = 1; // die branchnr normalerweise aus der AccounttypNr ableiten
-//    	int count = branchComponent.getTransactionCountOfBranch(bNr);
-//    	return new ResponseEntity<>(count, HttpStatus.OK);
+//    @RequestMapping("/transactions")
+//    public List<Transaction> getAllTransactions(){
+//    	return accountComponent.getAllTransactions();
 //    }
- 
     
-    
-    @RequestMapping(value = "/transactions/{branchNr}", method = RequestMethod.GET)
-    public ResponseEntity<?> getTransactionCount(@PathVariable("branchNr") String branchNr) throws BranchNotFoundException{
-    	int bNr = Integer.parseInt(branchNr);
-    	int count = branchComponent.getTransactionCountOfBranch(bNr);
-    	return new ResponseEntity<>(count, HttpStatus.OK);
-    }
 }

@@ -49,5 +49,8 @@ public interface AccountComponentInterface {
 	 * @throws AccountNotCoveredException 
 	 */
 	void transfer(AccountNrType sourceAccount,AccountNrType targetAccount, int value) throws AccountNotCoveredException;
+	
+	
+	public List<Transaction> getAllTransactions();
 
 }

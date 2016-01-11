@@ -31,19 +31,19 @@
     </form>
 
     <div>
-        <form ng-submit="doTransaction()">
+        <form ng-submit="addTransaction()">
         <br/>
         <p>Value : <input type="text" name="value" ng-model="value"/></p>
         <br/>
-       <!-- <h1>Enter a customer name to add it to the list (submit with '&lt;Enter&gt;'): {{name}}</h1> --> 
-        <h1>Count Transactions</h1>
+        <h1>Enter a Value to add it to the list (submit with '&lt;Enter&gt;'): {{name}}</h1> 
         </form>
     </div>
 
     <table class="table table-striped">
         <tr><th>#</th><th>Transactions</th></tr>
         <tr ng-repeat="transaction in transactions">
-            <td>{{ transaction.count }}</td>
+            <td>{{ transaction.id }}</td>
+            <td>{{ transaction.value }}</td>
            
         </tr>
     </table>
