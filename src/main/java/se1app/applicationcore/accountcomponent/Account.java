@@ -3,9 +3,14 @@
  */
 package se1app.applicationcore.accountcomponent;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import se1app.applicationcore.util.AccountNrType;
 
@@ -20,6 +25,9 @@ public class Account {
 	@Id
 	@GeneratedValue
 	private Integer id;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Transaction> transactions;
 	
 	private int accountValue; 
 	
@@ -40,6 +48,7 @@ public class Account {
 	public Account(AccountNrType accountNr){
 		this.accountNr = accountNr;
 		accountValue = 0;
+		transactions = new ArrayList<>();
 	}
 	
 	
@@ -73,6 +82,7 @@ public class Account {
 	 */
 	public void addToAcountValue(int value){
 		accountValue += value;
+		transactions.add(new Transaction(value));
 	}
 	
 	/**
@@ -81,6 +91,15 @@ public class Account {
 	 */
 	public void subFromAcountValue(int value){
 		accountValue -= value;
+		transactions.add(new Transaction(-value));
+	}
+	
+	/**
+	 * TODO
+	 * @return
+	 */
+	public List<Transaction> getTransactions(){
+		return transactions;
 	}
 
 	@Override

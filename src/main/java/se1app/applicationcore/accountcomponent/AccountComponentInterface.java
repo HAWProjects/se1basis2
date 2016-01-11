@@ -27,6 +27,13 @@ public interface AccountComponentInterface {
 	 */
 	Account getAccount(AccountNrType account);
 	
+	/**
+	 * Liste aller Transactions des Accounts
+	 * @param account
+	 * @return
+	 */
+	List<Transaction> getTransactions(AccountNrType account);
+	
 	
 	/**
 	 * loescht einen Account

@@ -1,23 +1,19 @@
 package se1app.applicationcore;
 
+import java.util.Arrays;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import se1app.applicationcore.accountcomponent.Account;
-import se1app.applicationcore.accountcomponent.AccountComponent;
 import se1app.applicationcore.accountcomponent.AccountRepository;
 import se1app.applicationcore.branchcomponent.Branch;
-import se1app.applicationcore.branchcomponent.BranchComponent;
 import se1app.applicationcore.branchcomponent.BranchRepository;
 import se1app.applicationcore.customercomponent.Customer;
 import se1app.applicationcore.customercomponent.CustomerRepository;
-import se1app.applicationcore.customercomponent.Reservation;
-import se1app.applicationcore.moviecomponent.Movie;
 import se1app.applicationcore.util.AccountNrType;
-
-import java.util.Arrays;
 
 @SpringBootApplication // das Folgende in dieser Zeile hinzufügen, um die Authentifizierung zu deaktivieren: (exclude = {SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class})
 public class Application {
@@ -41,12 +37,8 @@ public class Application {
             Branch branchOne = new Branch(1);
             Branch branchTwo = new Branch(2);
             
-            
             branchRepository.save(Arrays.asList(branchOne,branchTwo));
             
-            AccountComponent accCom = new AccountComponent(accountRepository, new BranchComponent(branchRepository));
-            accCom.transfer(accOne.getAccountNr(), accTwo.getAccountNr(), 10);
-            accCom.transfer(accOne.getAccountNr(), accTwo.getAccountNr(), 10);
         };
     }
 

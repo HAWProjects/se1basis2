@@ -4,9 +4,7 @@
 package se1app.applicationcore.customercomponent;
 
 
-import static org.junit.Assert.*;
-
-import java.util.List;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,8 +25,6 @@ import se1app.applicationcore.branchcomponent.Branch;
 import se1app.applicationcore.branchcomponent.BranchComponent;
 import se1app.applicationcore.branchcomponent.BranchRepository;
 import se1app.applicationcore.util.AccountNrType;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Robert
@@ -75,44 +71,6 @@ public class AccountComponentTest {
 		accountComponent = new AccountComponent(accountRepository, new BranchComponent(branchRepository));
 	}
 	
-	@Test
-	public void testGetAllAccounts() {
-		List<Account> accounts = accountRepository.findAll();
-		assertThat(accounts).hasSize(3);
-	}
-	
-	@Test
-	public void testGetSomeAccount() {
-		Account acc = accountRepository.findByAccountNr(accNr);
-		assertEquals(acc, account2);
-	}
-	
-	@Test
-	public void testDeleteAccount() {
-		accountRepository.delete(account2);
-		List<Account> accounts = accountRepository.findAll();
-		assertThat(accounts).hasSize(2);
-	}
-	
-	@Test
-	public void testTransfer() throws AccountNotCoveredException {
-		AccountNrType accNrTwo = new AccountNrType(234676);
-		
-		accountComponent.transfer(accNr, accNrTwo, 25);
-		
-		Account accOne = accountRepository.findByAccountNr(accNr);
-		Account accTwo = accountRepository.findByAccountNr(accNrTwo);
-		
-		assertEquals(accOne.getAccountValue(), accTwo.getAccountValue());
-		assertEquals(accTwo.getAccountValue(), 25);
-	}
-	
-	@Test(expected = AccountNotCoveredException.class)
-	public void testAccountNotCoveredException() throws AccountNotCoveredException {
-		AccountNrType accNrTwo = new AccountNrType(234676);
-		
-		accountComponent.transfer(accNr, accNrTwo, 125);
-	}
 	
 	@Test
 	public void testIncreaseTransferstatistics() throws AccountNotCoveredException{

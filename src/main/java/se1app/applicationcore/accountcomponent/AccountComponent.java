@@ -37,6 +37,11 @@ public class AccountComponent implements AccountComponentInterface {
 	public Account getAccount(AccountNrType account) {
 		return accountRepository.findByAccountNr(account);
 	}
+	
+	@Override
+	public List<Transaction> getTransactions(AccountNrType account) {
+		return accountRepository.findByAccountNr(account).getTransactions();
+	}
 
 	@Override
 	public void transfer(AccountNrType sourceAccount, AccountNrType targetAccount, int value) throws AccountNotCoveredException {
@@ -64,5 +69,7 @@ public class AccountComponent implements AccountComponentInterface {
 	public void deleteAccount(AccountNrType accountNr) {
 		accountRepository.delete(accountRepository.findByAccountNr(accountNr));
 	}
+
+
 
 }
