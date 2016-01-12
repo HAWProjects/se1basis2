@@ -96,9 +96,9 @@ public class AccountComponentTest {
 	
 	@Test(expected = AccountNotCoveredException.class)
 	public void testAccountNotCoveredException() throws AccountNotCoveredException {
-		AccountNrType accNrTwo = new AccountNrType(234676);
+		AccountNrType accNrThree = new AccountNrType(234676);
 		
-		accountComponent.transfer(accNrAccount2, accNrTwo, 125);
+		accountComponent.transfer(accNrAccount2, accNrThree, 125);
 	}
 	
 	@Test
@@ -116,7 +116,8 @@ public class AccountComponentTest {
 	
 	@Test
 	public void testIncreaseTransferStats() throws AccountNotCoveredException{
-		//account2 hat 50 startKapital
+		//account2 hat 50 startKapital und bereits eine Transaktion
+		
 		accountComponent.transfer(account2.getAccountNr(),account1.getAccountNr() , 25);
 		accountComponent.transfer(account2.getAccountNr(),account1.getAccountNr() , 5);
 		accountComponent.transfer(account2.getAccountNr(),account1.getAccountNr() , 5);
@@ -126,14 +127,14 @@ public class AccountComponentTest {
 		assertEquals(account2.getAccountValue(), 20);
 		assertEquals(account1.getAccountValue(), 30);
 		
-		assertEquals(4, account2.getTransactions().size());
+		assertEquals(5, account2.getTransactions().size()); 
 		assertEquals(4, account1.getTransactions().size());
 		
 		accountComponent.transfer(account1.getAccountNr(), account3.getAccountNr(), 12);
 		assertEquals(account3.getAccountValue(), 12);
 		assertEquals(account1.getAccountValue(), 18);
 		
-		assertEquals(4, account2.getTransactions().size());
+		assertEquals(5, account2.getTransactions().size());
 		assertEquals(5, account1.getTransactions().size());
 		assertEquals(1, account3.getTransactions().size());
 		

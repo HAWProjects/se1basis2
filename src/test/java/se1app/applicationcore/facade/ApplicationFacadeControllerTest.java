@@ -60,7 +60,7 @@ public class ApplicationFacadeControllerTest {
 	private Account account2;
 	private Account account3;
 	
-	 @Autowired
+	@Autowired
 	private AccountComponentInterface accountComponent;
 
 	@Before
@@ -100,19 +100,13 @@ public class ApplicationFacadeControllerTest {
 
 
 	@Test
-	public void testTransactionsAll() {
-		try {
-			accountComponent.transfer(account1.getAccountNr(), account2.getAccountNr(), 20);
-		} catch (AccountNotCoveredException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void testTransactionsAll() throws AccountNotCoveredException {
 		
-		List<Transaction> transactions = account1.getTransactions();
+		accountComponent.transfer(account1.getAccountNr(), account2.getAccountNr(), 20);
 		
 		when().get("/transactions").
 
-		then().statusCode(HttpStatus.OK.value()).body("transactions", hasItems(1));
+		then().statusCode(HttpStatus.OK.value()).body("transactions", hasItem(account1.getTransactions()));
 
 	}
 
