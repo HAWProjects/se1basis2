@@ -29,7 +29,7 @@ public class Account {
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Transaction> transactions;
 	
-	private int accountValue; 
+	
 	
 	private AccountNrType accountNr;
 	
@@ -47,7 +47,7 @@ public class Account {
 	 */
 	public Account(AccountNrType accountNr){
 		this.accountNr = accountNr;
-		accountValue = 0;
+		
 		transactions = new ArrayList<>();
 	}
 	
@@ -65,34 +65,21 @@ public class Account {
 	 * @return
 	 */
 	public int getAccountValue(){
-		return accountValue;
+		int result = 0;
+		for(Transaction trans : transactions){
+			result += trans.getValue();
+			
+		}
+		
+		return result;
 	}
 	
-	/**
-	 * TODO
-	 * @param newValue
-	 */
-	public void setAccountValue(int newValue){
-		accountValue = newValue;
-	}
+
 	
-	/**
-	 * TODO
-	 * @param value
-	 */
-	public void addToAcountValue(int value){
-		accountValue += value;
+	public void buche(int value){
 		transactions.add(new Transaction(value));
 	}
 	
-	/**
-	 * TODO
-	 * @param value
-	 */
-	public void subFromAcountValue(int value){
-		accountValue -= value;
-		transactions.add(new Transaction(-value));
-	}
 	
 	/**
 	 * TODO
@@ -107,29 +94,33 @@ public class Account {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((accountNr == null) ? 0 : accountNr.hashCode());
-		result = prime * result + accountValue;
+		result = prime * result + ((transactions == null) ? 0 : transactions.hashCode());
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if(this == obj)
+		if (this == obj)
 			return true;
-		if(obj == null)
+		if (obj == null)
 			return false;
-		if(getClass() != obj.getClass())
+		if (getClass() != obj.getClass())
 			return false;
 		Account other = (Account) obj;
-		if(accountNr == null) {
-			if(other.accountNr != null)
+		if (accountNr == null) {
+			if (other.accountNr != null)
 				return false;
-		}
-		else if(!accountNr.equals(other.accountNr))
+		} else if (!accountNr.equals(other.accountNr))
 			return false;
-		if(accountValue != other.accountValue)
+		if (transactions == null) {
+			if (other.transactions != null)
+				return false;
+		} else if (!transactions.equals(other.transactions))
 			return false;
 		return true;
 	}
+
+
 	
 	
 }

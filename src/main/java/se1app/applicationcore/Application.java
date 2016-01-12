@@ -26,11 +26,12 @@ public class Application {
             Customer pluto = new Customer("Schulze");
             customerRepository.save(Arrays.asList(mickey, minnie, pluto));
             
-            Account accOne = new Account(new AccountNrType(12484));
-            Account accTwo = new Account(new AccountNrType(12485));
-            Account accThree = new Account(new AccountNrType(12486));
-            accOne.addToAcountValue(120);
-            accTwo.addToAcountValue(180);
+            Account accOne = new Account(new AccountNrType(12345));
+            Account accTwo = new Account(new AccountNrType(12346));
+            Account accThree = new Account(new AccountNrType(12347));
+            accOne.buche(120);
+            accOne.buche(80);
+            accTwo.buche(180);
             
             accountRepository.save(Arrays.asList(accOne,accTwo,accThree));
             

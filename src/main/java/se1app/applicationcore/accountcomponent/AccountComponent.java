@@ -48,23 +48,23 @@ public class AccountComponent implements AccountComponentInterface {
 	public void transfer(AccountNrType sourceAccount, AccountNrType targetAccount, int value) throws AccountNotCoveredException {
 		Account sourceAcc = accountRepository.findByAccountNr(sourceAccount);
 		Account targetAcc = accountRepository.findByAccountNr(targetAccount);
-		if(sourceAcc.getAccountValue() < value){
-			throw new AccountNotCoveredException(sourceAccount);
-		}
-		sourceAcc.subFromAcountValue(value);
-		targetAcc.addToAcountValue(value);
+//		if(sourceAcc.getAccountValue() < value){
+//			throw new AccountNotCoveredException(sourceAccount);
+//		}
+//		sourceAcc.buche(-value);
+//		targetAcc.buche(value);
 		
-		accountRepository.save(sourceAcc);
-		accountRepository.save(targetAcc);
+//		accountRepository.save(sourceAcc);
+//		accountRepository.save(targetAcc);
 
 		//TODO:transaktion hochzählen
-		try {
-			int branchNr = 1; // normalerweise aus Account ableiten
-			branchComponent.increaseTransferStatistics(branchNr);
-		} catch(BranchNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			int branchNr = 1; // normalerweise aus Account ableiten
+//			branchComponent.increaseTransferStatistics(branchNr);
+//		} catch(BranchNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 	@Override

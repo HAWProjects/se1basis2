@@ -63,7 +63,7 @@ public class AccountComponentTest {
 		account2 = new Account(accNrAccount2);
 		account3 = new Account(new AccountNrType(234676));
 		
-		account2.setAccountValue(50);
+		account2.buche(50);
 		
 		accountRepository.save(account1);
 		accountRepository.save(account2);

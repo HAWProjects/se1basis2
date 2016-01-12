@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import se1app.applicationcore.accountcomponent.AccountComponentInterface;
 import se1app.applicationcore.accountcomponent.AccountNotCoveredException;
 import se1app.applicationcore.accountcomponent.Transaction;
-import se1app.applicationcore.branchcomponent.BranchNotFoundException;
 import se1app.applicationcore.customercomponent.Customer;
 import se1app.applicationcore.customercomponent.CustomerComponentInterface;
 import se1app.applicationcore.customercomponent.CustomerNotFoundException;
@@ -95,25 +94,24 @@ class ApplicationFacadeController {
     
     
    
+//    @RequestMapping(value = "/transactions", method = RequestMethod.POST)
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public void addTransaction(@RequestBody String value) throws AccountNotCoveredException {
+//    	AccountNrType accountNr = new AccountNrType(12484);
+//    	accountComponent.transfer(accountNr, new AccountNrType(12485), Integer.parseInt(value));
+//    }
+    
     @RequestMapping(value = "/transactions", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public Transaction addTransaction(@RequestBody Integer value) throws AccountNotCoveredException {
+    public void addTransaction() throws AccountNotCoveredException {
     	AccountNrType accountNr = new AccountNrType(12484);
-    	accountComponent.transfer(accountNr, new AccountNrType(12485), value);
-        return new Transaction(value);
+    	accountComponent.transfer(accountNr, new AccountNrType(12485), Integer.parseInt("10"));
     }
     
-    @RequestMapping(value = "/transactions/{value}", method = RequestMethod.GET)
-    public List<Transaction> getTransaction(@PathVariable("value") int value) throws AccountNotCoveredException, BranchNotFoundException {
-    	AccountNrType accountNr = new AccountNrType(12484);
-    	accountComponent.transfer(accountNr, new AccountNrType(12485), value);
-    	
-    	return accountComponent.getTransactions(accountNr);
-    }
     
-//    @RequestMapping("/transactions")
-//    public List<Transaction> getAllTransactions(){
-//    	return accountComponent.getAllTransactions();
-//    }
+    @RequestMapping(value = "/transactions", method = RequestMethod.GET)
+    public List<Transaction> getAllTransactions(){
+    	return accountComponent.getTransactions(new AccountNrType(12345));
+    }
     
 }
