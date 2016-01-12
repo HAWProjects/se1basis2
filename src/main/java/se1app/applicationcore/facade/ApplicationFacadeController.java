@@ -94,19 +94,19 @@ class ApplicationFacadeController {
     
     
    
-//    @RequestMapping(value = "/transactions", method = RequestMethod.POST)
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public void addTransaction(@RequestBody String value) throws AccountNotCoveredException {
-//    	AccountNrType accountNr = new AccountNrType(12484);
-//    	accountComponent.transfer(accountNr, new AccountNrType(12485), Integer.parseInt(value));
-//    }
-    
     @RequestMapping(value = "/transactions", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void addTransaction() throws AccountNotCoveredException {
-    	AccountNrType accountNr = new AccountNrType(12484);
-    	accountComponent.transfer(accountNr, new AccountNrType(12485), Integer.parseInt("10"));
+    public void addTransaction(@RequestBody String value) throws AccountNotCoveredException {
+    	AccountNrType accountNr = new AccountNrType(12345);
+    	accountComponent.transfer(accountNr, new AccountNrType(12346), Integer.parseInt(value));
     }
+    
+//    @RequestMapping(value = "/transactions", method = RequestMethod.POST)
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public void addTransaction() throws AccountNotCoveredException {
+//    	AccountNrType accountNr = new AccountNrType(12345);
+//    	accountComponent.transfer(accountNr, new AccountNrType(12346), Integer.parseInt("10"));
+//    }
     
     
     @RequestMapping(value = "/transactions", method = RequestMethod.GET)
