@@ -48,6 +48,34 @@
 
 </div><!-- /container -->
 
+<div class="container" ng-controller="TransactionCtrl">
+
+    <h1 th:inline="text">Transactions [[${#httpServletRequest.remoteUser}]]!</h1>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+
+    <div>
+        <form ng-submit="addTransaction()">
+        <br/>
+        <p>Value : <input type="text" name="value" ng-model="value"/></p>
+        <br/>
+        <h1>Enter a Value to add it to the list (submit with '&lt;Enter&gt;'): {{value}}</h1> 
+        </form>
+    </div>
+
+    <table class="table table-striped">
+        <tr><th>#</th><th>Transactions</th></tr>
+        <tr ng-repeat="transaction in transactions">
+            <td>{{ transaction.account }}</td>
+            <td>{{ transaction.value }}</td>
+           
+        </tr>
+    </table>
+
+</div><!-- /container -->
+
+
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

@@ -68,6 +68,8 @@ public class ApplicationFacadeControllerTest {
 
 		customerRepository.deleteAll();
 		accountRepository.deleteAll();
+		branchRepository.deleteAll();
+		
 
 		mickey = new Customer("Mickey Mouse");
 		minnie = new Customer("Minnie Mouse");
@@ -103,12 +105,14 @@ public class ApplicationFacadeControllerTest {
 	public void testTransactionsAll() throws AccountNotCoveredException {
 		
 		accountComponent.transfer(account1.getAccountNr(), account2.getAccountNr(), 20);
+		accountRepository.save(account1);
 		
 		when().get("/transactions").
 
-		then().statusCode(HttpStatus.OK.value()).body("transactions", hasItem(account1.getTransactions()));
+		then().statusCode(HttpStatus.OK.value()).body("id", hasItem(1));
 
 	}
+	
 
 	@Test
 	public void canFetchAll() {

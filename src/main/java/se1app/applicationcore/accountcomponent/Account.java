@@ -8,9 +8,12 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+
 
 import se1app.applicationcore.util.AccountNrType;
 
@@ -27,10 +30,11 @@ public class Account {
 	private Integer id;
 	
 	@OneToMany(cascade = CascadeType.ALL)
+	 @JoinColumn(name="account_id")
 	private List<Transaction> transactions;
 	
 	
-	
+
 	private AccountNrType accountNr;
 	
 

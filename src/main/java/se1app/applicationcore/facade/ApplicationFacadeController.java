@@ -96,18 +96,22 @@ class ApplicationFacadeController {
    
     @RequestMapping(value = "/transactions", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void addTransaction(@RequestBody String value) throws AccountNotCoveredException {
+    public Transaction addTransaction(@RequestBody Transaction value) throws AccountNotCoveredException {
     	AccountNrType accountNr = new AccountNrType(12345);
-    	accountComponent.transfer(accountNr, new AccountNrType(12346), Integer.parseInt(value));
+    	accountComponent.transfer(accountNr, new AccountNrType(12346), value.getValue());
+    	
+    	return accountComponent.getTransactions(accountNr).get(accountComponent.getTransactions(accountNr).size()-1);
     }
     
-//    @RequestMapping(value = "/transactions", method = RequestMethod.POST)
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public void addTransaction() throws AccountNotCoveredException {
-//    	AccountNrType accountNr = new AccountNrType(12345);
-//    	accountComponent.transfer(accountNr, new AccountNrType(12346), Integer.parseInt("10"));
+//    @RequestMapping(value = "/transactions/{accountNr}", method = RequestMethod.GET)
+//    public List<Transaction> getTransactionsOfAccount(@PathVariable("accountNr") Integer accountNr){
+//    	return accountComponent.getTransactions(new AccountNrType(accountNr));
 //    }
-    
+//    
+//    @RequestMapping("/transactions")
+//    public List<Transaction> getAllTransactions(){
+//    	return accountComponent.getTransactions(new AccountNrType(12345));
+//    }
     
     @RequestMapping(value = "/transactions", method = RequestMethod.GET)
     public List<Transaction> getAllTransactions(){
