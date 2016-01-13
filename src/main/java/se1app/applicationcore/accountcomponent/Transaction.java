@@ -1,14 +1,19 @@
 package se1app.applicationcore.accountcomponent;
 
 
+import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.Proxy;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
+//@Proxy(lazy=false)
 public class Transaction {
 	
 	@Id
@@ -17,6 +22,7 @@ public class Transaction {
 	
 	@JsonIgnore
 	@ManyToOne
+//	@Basic(fetch=FetchType.LAZY)
 	private Account account;
 	
 	private Integer value;

@@ -8,12 +8,9 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-
 
 import se1app.applicationcore.util.AccountNrType;
 
@@ -30,10 +27,7 @@ public class Account {
 	private Integer id;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	 @JoinColumn(name="account_id")
-	private List<Transaction> transactions;
-	
-	
+	private List<Transaction> transactions = new ArrayList<>();
 
 	private AccountNrType accountNr;
 	
@@ -52,12 +46,11 @@ public class Account {
 	public Account(AccountNrType accountNr){
 		this.accountNr = accountNr;
 		
-		transactions = new ArrayList<>();
 	}
 	
 	
 	/**
-	 * TODO
+	 * Liefert die AcountNr des Accounts
 	 * @return
 	 */
 	public AccountNrType getAccountNr(){
@@ -65,14 +58,13 @@ public class Account {
 	}
 	
 	/**
-	 * TODO
+	 * liefert den Betrag des Accounts
 	 * @return
 	 */
 	public int getAccountValue(){
 		int result = 0;
 		for(Transaction trans : transactions){
 			result += trans.getValue();
-			
 		}
 		
 		return result;
@@ -80,13 +72,17 @@ public class Account {
 	
 
 	
+	/**
+	 * Bucht eine Transaktion
+	 * @param value
+	 */
 	public void buche(int value){
 		transactions.add(new Transaction(value));
 	}
 	
 	
 	/**
-	 * TODO
+	 * Liefert alle Transaktionen
 	 * @return
 	 */
 	public List<Transaction> getTransactions(){
