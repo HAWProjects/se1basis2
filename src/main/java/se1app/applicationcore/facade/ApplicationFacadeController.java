@@ -103,11 +103,11 @@ class ApplicationFacadeController {
     	return accountComponent.getTransactions(accountNr).get(accountComponent.getTransactions(accountNr).size()-1);
     }
     
-//    @RequestMapping(value = "/transactions/{accountNr}", method = RequestMethod.GET)
-//    public List<Transaction> getTransactionsOfAccount(@PathVariable("accountNr") Integer accountNr){
-//    	return accountComponent.getTransactions(new AccountNrType(accountNr));
-//    }
-//    
+    @RequestMapping(value = "/transactions/{accountNr}", method = RequestMethod.GET)
+    public List<Transaction> getTransactionsOfAccount(@PathVariable("accountNr") Integer accountNr){
+    	return accountComponent.getTransactions(new AccountNrType(accountNr));
+    }
+    
 //    @RequestMapping("/transactions")
 //    public List<Transaction> getAllTransactions(){
 //    	return accountComponent.getTransactions(new AccountNrType(12345));

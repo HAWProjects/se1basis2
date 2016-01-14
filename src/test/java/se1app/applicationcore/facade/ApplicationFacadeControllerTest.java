@@ -105,7 +105,7 @@ public class ApplicationFacadeControllerTest {
 	public void testTransactionsAll() throws AccountNotCoveredException {
 		
 		accountComponent.transfer(account1.getAccountNr(), account2.getAccountNr(), 20);
-		accountRepository.save(account1);
+//		accountRepository.save(account1);
 		
 		when().get("/transactions").
 

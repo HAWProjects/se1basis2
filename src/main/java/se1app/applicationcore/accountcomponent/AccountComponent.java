@@ -6,6 +6,8 @@ package se1app.applicationcore.accountcomponent;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -45,6 +47,7 @@ public class AccountComponent implements AccountComponentInterface {
 	}
 
 	@Override
+	@Transactional
 	public void transfer(AccountNrType sourceAccount, AccountNrType targetAccount, int value) throws AccountNotCoveredException {
 		Account sourceAcc = accountRepository.findByAccountNr(sourceAccount);
 		Account targetAcc = accountRepository.findByAccountNr(targetAccount);
