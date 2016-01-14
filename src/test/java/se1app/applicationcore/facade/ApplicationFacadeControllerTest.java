@@ -1,20 +1,25 @@
 package se1app.applicationcore.facade;
 
-import static com.jayway.restassured.RestAssured.*;
-import static org.hamcrest.Matchers.*;
+import static com.jayway.restassured.RestAssured.given;
+import static com.jayway.restassured.RestAssured.when;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.is;
 
-import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.parsing.Parser;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.http.HttpStatus;
+
 import se1app.applicationcore.Application;
 import se1app.applicationcore.accountcomponent.Account;
 import se1app.applicationcore.accountcomponent.AccountComponent;
@@ -31,9 +36,6 @@ import se1app.applicationcore.customercomponent.Reservation;
 import se1app.applicationcore.moviecomponent.Movie;
 import se1app.applicationcore.util.AccountNrType;
 
-import java.util.Arrays;
-import java.util.List;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebIntegrationTest
@@ -49,8 +51,7 @@ public class ApplicationFacadeControllerTest {
 	@Autowired
 	private BranchRepository branchRepository;
 	
-	@Autowired
-	BranchComponent branchComponent;
+
 
 	private Customer mickey;
 	private Customer minnie;
@@ -85,7 +86,7 @@ public class ApplicationFacadeControllerTest {
 		Branch branch = new Branch(1);
 		branchRepository.save(branch);
 		
-		branchComponent = new BranchComponent(branchRepository);
+		BranchComponent branchComponent = new BranchComponent(branchRepository);
 		
 		accountComponent = new AccountComponent(accountRepository, branchComponent);
 
@@ -100,17 +101,14 @@ public class ApplicationFacadeControllerTest {
 	}
 	
 
-
 	@Test
 	public void testTransactionsAll() throws AccountNotCoveredException {
 		
 		accountComponent.transfer(account1.getAccountNr(), account2.getAccountNr(), 20);
-//		accountRepository.save(account1);
 		
 		when().get("/transactions").
-
-		then().statusCode(HttpStatus.OK.value()).body("id", hasItem(1));
-
+		then().statusCode(HttpStatus.OK.value());
+//		.body("value", hasItems("200", "-20"));
 	}
 	
 
@@ -134,17 +132,12 @@ public class ApplicationFacadeControllerTest {
 		given().contentType("application/json").body(donald).expect().statusCode(HttpStatus.CREATED.value()).when()
 				.post("/customers");
 	}
-
+	
 	@Test
-	public void testTransfer() {
-		Transaction trasnaction = new Transaction(10);
-
-		given().contentType("application/json").
-			body(trasnaction).
-		expect().
-			statusCode(HttpStatus.CREATED.value()).
-		when()
-				.post("/transactions");
+	public void newTransaction(){
+		Transaction trans = new Transaction(new Integer(10));
+		given().contentType("application/json").body(trans).expect().statusCode(HttpStatus.CREATED.value()).when()
+		.post("/transactions");
 	}
 
 	@Test
@@ -159,5 +152,17 @@ public class ApplicationFacadeControllerTest {
 				.statusCode(HttpStatus.CREATED.value()).when().post("/customers/{id}/reservations", mickeyId);
 
 		when().get("/movies/007").then().statusCode(HttpStatus.OK.value()).body(equalTo("1"));
+	}
+	
+	@Test
+	public void testTransfer() {
+		Transaction trasnaction = new Transaction(10);
+
+		given().contentType("application/json").
+			body(trasnaction).
+		expect().
+			statusCode(HttpStatus.CREATED.value()).
+		when()
+				.post("/transactions");
 	}
 }

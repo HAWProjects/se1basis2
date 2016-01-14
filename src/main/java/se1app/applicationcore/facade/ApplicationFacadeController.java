@@ -92,7 +92,6 @@ class ApplicationFacadeController {
     
     //________________ Praktikum 4 ___________________
     
-    
    
     @RequestMapping(value = "/transactions", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
@@ -108,10 +107,6 @@ class ApplicationFacadeController {
     	return accountComponent.getTransactions(new AccountNrType(accountNr));
     }
     
-//    @RequestMapping("/transactions")
-//    public List<Transaction> getAllTransactions(){
-//    	return accountComponent.getTransactions(new AccountNrType(12345));
-//    }
     
     @RequestMapping(value = "/transactions", method = RequestMethod.GET)
     public List<Transaction> getAllTransactions(){

@@ -71,6 +71,14 @@ public class Account {
 		return result;
 	}
 	
+	/**
+	 * Liefert die Id
+	 * @return
+	 */
+	public Integer getId(){
+		return id;
+	}
+	
 
 	
 	/**
@@ -121,7 +129,12 @@ public class Account {
 		return true;
 	}
 
-
+    @Override
+    public String toString() {
+        return String.format(
+                "Account[id=%d, accountNr='%s']",
+                id, accountNr);
+    }
 	
 	
 }

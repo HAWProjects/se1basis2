@@ -59,7 +59,8 @@
         <form ng-submit="addTransaction()">
         <br/>
         <p>Value : <input type="text" name="value" ng-model="value"/></p>
-        <br/>
+        <br/> 
+        <p>Es wird auf Konto 12346 Überwiesen</p>
         <h1>Enter a Value to add it to the list (submit with '&lt;Enter&gt;'): {{value}}</h1> 
         </form>
     </div>
@@ -67,7 +68,7 @@
     <table class="table table-striped">
         <tr><th>#</th><th>Transactions</th></tr>
         <tr ng-repeat="transaction in transactions">
-            <td>{{ transaction.account }}</td>
+            <td>{{ transaction.id }}</td>
             <td>{{ transaction.value }}</td>
            
         </tr>

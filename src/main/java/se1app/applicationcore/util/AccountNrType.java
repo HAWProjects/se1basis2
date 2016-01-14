@@ -30,5 +30,29 @@ public class AccountNrType implements Serializable {
 	public int getAccountNr(){
 		return accountNr;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + accountNr;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(this == obj)
+			return true;
+		if(obj == null)
+			return false;
+		if(getClass() != obj.getClass())
+			return false;
+		AccountNrType other = (AccountNrType) obj;
+		if(accountNr != other.accountNr)
+			return false;
+		return true;
+	}
+	
+	
 	
 }

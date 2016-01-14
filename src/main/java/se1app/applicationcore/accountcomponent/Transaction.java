@@ -1,14 +1,10 @@
 package se1app.applicationcore.accountcomponent;
 
 
-import javax.persistence.Basic;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-
-import org.hibernate.annotations.Proxy;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -40,6 +36,10 @@ public class Transaction {
 	
 	public Integer getValue() {
 		return value;
+	}
+	
+	public Integer getId(){
+		return id;
 	}
 	
 	public void setAccount(Account account) {
@@ -79,4 +79,10 @@ public class Transaction {
 		return true;
 	}
 	
+    @Override
+    public String toString() {
+        return String.format(
+                "Transaction[id=%d, value='%s']",
+                id, value);
+    }
 }
