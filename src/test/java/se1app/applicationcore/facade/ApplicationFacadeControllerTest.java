@@ -114,8 +114,9 @@ public class ApplicationFacadeControllerTest {
 
 	@Test
 	public void canFetchAll() {
-		when().get("/customers").then().statusCode(HttpStatus.OK.value()).body("name",
-				hasItems("Mickey Mouse", "Minnie Mouse", "Pluto"));
+		when().get("/customers").
+		then().statusCode(HttpStatus.OK.value()).
+		body("name", hasItems("Mickey Mouse", "Minnie Mouse", "Pluto"));
 	}
 
 	@Test

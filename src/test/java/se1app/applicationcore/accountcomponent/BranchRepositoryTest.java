@@ -1,4 +1,4 @@
-package se1app.applicationcore.AccountComponent;
+package se1app.applicationcore.accountcomponent;
 
 import static org.junit.Assert.*;
 
